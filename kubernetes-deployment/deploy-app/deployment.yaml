@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ramiz-krypton
+  labels:
+    app: ramiz-krypton
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ramiz-krypton
+  template:
+    metadata:
+      labels:
+        app: ramiz-krypton
+    spec:
+      containers:
+      - name: ramiz-krypton
+        image: 572629984572.dkr.ecr.eu-central-1.amazonaws.com/ramiz-krypton:latest
+        ports:
+        - containerPort: 80

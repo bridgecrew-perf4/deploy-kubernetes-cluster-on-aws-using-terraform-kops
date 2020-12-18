@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-krypton
+  annotations:
+          nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /index.html
+        backend:
+          serviceName: ramiz-krypton
+          servicePort: 80  
