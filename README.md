@@ -26,7 +26,7 @@ ii)	Login to the jump server and install  AWS CLI and then execute aws configure
 
 iii)	Install kubectl--> https://kubernetes.io/docs/tasks/tools/install-kubectl/
 
-iv)	Install KOPS using the below command:
+iv)	Install kops and use the below command to create the cluster:
 kops create cluster --name=kops.ramiz.tr-talent.de --state=s3://kops-statestore --zones=eu-central-1a,eu-central-1b --node-count=2 --node-size=t3.large --master-size=t3.large --dns-zone=kops.ramiz.tr-talent.de --dns=private --topology=private --networking calico --master-zones=eu-central-1a 
 
 v)	Then update the cluster using below,
