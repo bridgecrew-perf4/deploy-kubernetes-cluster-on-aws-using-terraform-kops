@@ -42,7 +42,7 @@ vii)	Now itâ€™s time to verify if all the nodes are in running state and yay itâ
 
 i)	ECR Repository(ramiz-krypton) is deployed using Terraform.
 
-ii)	Dockerfile,index.html and nginx conf  files are stored under /home/ubuntu/k8s-deployment/src.
+ii)	Dockerfile,index.html and nginx conf  files are stored under /home/ubuntu/k8s-deployment/src on the Stepping Stone/Jump server.
 
 iii)	Navigate to the path and execute the build and push commands which will push your image to the newly create ECR repository.(The commands used are present in the AWS ECR console under push commands section).
 
