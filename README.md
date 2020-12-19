@@ -8,7 +8,7 @@ This README document describes the steps I took while deploying the K8’s clust
 
 **1)	Deploying the Infrastructure using Terraform and below are the components provisioned.**
 
-i) A VPC with three subnets(two private in different AZ’s for High Availability) and a single public subnet where the Stepping Stone/Jump server is deployed for deploying and interacting the cluster using kubectl.
+i) A VPC with three subnets(two private in different AZ’s for High Availability) and a single public subnet where the Stepping Stone/Jump server is deployed for provisioning the cluster using KOPS and interacting it using kubectl.
 
 ii) Internet Gateway which is attached to the public subnet for installing KOPS,kubectl,aws cli.
 
@@ -24,17 +24,19 @@ i)	Before installing KOPS, a S3 bucket is required to store the state of the clu
 
 ii)	Login to the jump server and install  AWS CLI and then execute aws configure and store your AWS Access Key,Secret Access Key  which will be used for authentication.
 
-iii)	Install kubectl--> https://kubernetes.io/docs/tasks/tools/install-kubectl/
+iii) Generate a key which will be used to login to the nodes-->  ssh-keygen -f .ssh/id_rsa
 
-iv)	Install kops and use the below command to create the cluster:
+iv)	Install kubectl--> https://kubernetes.io/docs/tasks/tools/install-kubectl/
+
+v)	Install kops-->https://kubernetes.io/docs/setup/production-environment/tools/kops/ and use the below command to create the cluster:
 kops create cluster --name=kops.ramiz.tr-talent.de --state=s3://kops-statestore --zones=eu-central-1a,eu-central-1b --node-count=2 --node-size=t3.large --master-size=t3.large --dns-zone=kops.ramiz.tr-talent.de --dns=private --topology=private --networking calico --master-zones=eu-central-1a 
 
-v)	Then update the cluster using below,
+vi)	Then update the cluster using below,
 kops update cluster --name kops.ramiz.tr-talent.de --yes --state=s3://kops-statestore
 
-vi)	Validate the cluster using kops validate cluster kops.ramiz.tr-talent.de --state=s3://kops-statestore which tells you that your cluster is ready.
+vii)	Validate the cluster using kops validate cluster kops.ramiz.tr-talent.de --state=s3://kops-statestore which tells you that your cluster is ready.
 
-vii)	Now it’s time to verify if all the nodes are in running state and yay it’s running:)
+viii)	Now it’s time to verify if all the nodes are in running state and yay it’s running:)
 
 ![](images/kubectl.png)
 
@@ -54,9 +56,9 @@ vi)	All the objects are now created(Deployments,PODS,services,Ingress).
 
 ![](images/k8-resources.png)
 
-vii)	You can access the application by using the External IP of the service,in our case it is aa1df71a84eea4286a811db00981a976-443336530.eu-central-1.elb.amazonaws.com which is also the DNS name of the Loadbalancer deployed in the AWS.
+vii)	You can access the application by using the External IP of the service,in our case it is aa1df71a84eea4286a811db00981a976-443336530.eu-central-1.elb.amazonaws.com which is  the DNS name of the Classic Loadbalancer deployed in the AWS account.
 
-viii)	Finally we need to add a domain,I have created a CNAME record with hello.ramiz.tr-talent.de under the public hosted zone ramiz.tr-talent.de pointing to the DNS Name of the Load Balancer and we're done.
+viii)	Finally we need to add a domain hence I have created a CNAME record with hello.ramiz.tr-talent.de under the public hosted zone (ramiz.tr-talent.de) pointing to the DNS Name of the Load Balancer and we're done.
 
 BingoO 🥳Congratulations! our application has been successfully deployed on our Kubernetes cluster,you can access it using http://hello.ramiz.tr-talent.de/
 
